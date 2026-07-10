@@ -1,4 +1,4 @@
-const BOOKING_FORM_URL = "PASTE_GOOGLE_FORM_LINK_HERE";
+const BOOKING_FORM_URL = "https://forms.gle/26qZEEqFuM4yJCnX7";
 
 document.getElementById('year').textContent=new Date().getFullYear();const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}}),{threshold:.12});document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
