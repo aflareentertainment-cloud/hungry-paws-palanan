@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>L'Heure Verte · Kilian Paris</title>
+<meta name="description" content="Kilian Paris L'Heure Verte: absinthe, violet leaf and patchouli. Notes pyramid, character and wear guide.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f5f3ee; --card:#ffffff; --ink:#1d2420; --muted:#6b736e; --line:#e3e0d8;
+  --green:#4f7a3a; --green-soft:#e6efdf; --gold:#a8874a; --violet:#7b6a9e; --wood:#8a6544;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#121614; --card:#1b201d; --ink:#ecefe9; --muted:#9aa39d; --line:#2c332f;
+    --green:#8fbf6f; --green-soft:#24301f; --gold:#cfae6e; --violet:#b3a2d6; --wood:#c49a72;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121614; --card:#1b201d; --ink:#ecefe9; --muted:#9aa39d; --line:#2c332f;
+  --green:#8fbf6f; --green-soft:#24301f; --gold:#cfae6e; --violet:#b3a2d6; --wood:#c49a72;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,sans-serif}
+a{color:var(--green)}
+.wrap{max-width:1040px;margin:0 auto;padding:24px 16px 64px}
+.crumbs{font-size:13px;color:var(--muted);margin-bottom:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:28px}
+h1,h2{font-family:"Cormorant Garamond",Georgia,serif;font-weight:600;margin:0}
+h1{font-size:clamp(34px,6vw,54px);line-height:1.05}
+h2{font-size:30px;margin-bottom:6px}
+.sub{color:var(--muted);margin:6px 0 18px}
+
+/* Hero */
+.hero{display:grid;grid-template-columns:minmax(220px,340px) 1fr;gap:32px;align-items:center}
+.bottle{background:radial-gradient(circle at 50% 40%,var(--green-soft),transparent 70%);border-radius:16px;display:flex;justify-content:center;padding:12px}
+.bottle img,.bottle svg{width:100%;max-width:280px;height:auto}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+.tag{border:1px solid var(--line);border-radius:999px;padding:4px 12px;font-size:13px;color:var(--muted)}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-top:18px}
+.fact{border-top:2px solid var(--green);padding-top:8px}
+.fact b{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600}
+
+/* Accords */
+section{margin-top:24px}
+.accords{display:grid;gap:10px;margin-top:14px}
+.acc{display:grid;grid-template-columns:110px 1fr;gap:12px;align-items:center;font-size:14px}
+.bar{height:26px;border-radius:8px;background:var(--line);overflow:hidden}
+.bar span{display:flex;align-items:center;height:100%;padding-left:10px;color:#fff;font-size:12px;font-weight:600;border-radius:8px}
+
+/* Pyramid */
+.tier{margin-top:22px}
+.tier h3{font:600 13px Inter,sans-serif;text-transform:uppercase;letter-spacing:.12em;color:var(--gold);margin:0 0 12px;text-align:center}
+.notes{display:flex;flex-wrap:wrap;justify-content:center;gap:18px}
+.note{width:112px;text-align:center;font-size:14px}
+.note .ic{width:84px;height:84px;margin:0 auto 8px;border-radius:50%;background:var(--green-soft);display:grid;place-items:center;border:1px solid var(--line)}
+.note .ic svg{width:52px;height:52px}
+.pyr-line{height:1px;background:var(--line);margin:22px auto 0;width:60%}
+
+/* Wear */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.season{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.pill{flex:1;min-width:90px;text-align:center;border:1px solid var(--line);border-radius:12px;padding:10px 6px;font-size:13px}
+.pill i{display:block;height:6px;border-radius:3px;background:var(--line);margin-top:8px;overflow:hidden}
+.pill i::after{content:"";display:block;height:100%;width:var(--v);background:var(--green)}
+.foot{font-size:12px;color:var(--muted);margin-top:28px;text-align:center}
+@media (max-width:720px){
+  .hero,.grid2{grid-template-columns:1fr}
+  .card{padding:20px}
+  .acc{grid-template-columns:90px 1fr}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumbs">Perfumes › Kilian Paris › L'Heure Verte</div>
+
+  <!-- HERO -->
+  <div class="card hero">
+    <div class="bottle">
+      <!-- Swap this SVG for your own product photo: <img src="../assets/lheure-verte.jpg" alt="L'Heure Verte bottle"> -->
+      <svg viewBox="0 0 200 300" role="img" aria-label="Illustrated green perfume bottle">
+        <defs>
+          <linearGradient id="glass" x1="0" x2="1">
+            <stop offset="0" stop-color="#2f5a2a"/><stop offset=".45" stop-color="#6fa24f"/><stop offset="1" stop-color="#244620"/>
+          </linearGradient>
+          <linearGradient id="cap" x1="0" x2="1">
+            <stop offset="0" stop-color="#1a1a1a"/><stop offset=".5" stop-color="#4a4a4a"/><stop offset="1" stop-color="#111"/>
+          </linearGradient>
+        </defs>
+        <ellipse cx="100" cy="288" rx="62" ry="7" fill="#000" opacity=".12"/>
+        <rect x="70" y="18" width="60" height="62" rx="6" fill="url(#cap)"/>
+        <rect x="84" y="80" width="32" height="14" fill="#8a7444"/>
+        <rect x="42" y="94" width="116" height="190" rx="14" fill="url(#glass)"/>
+        <rect x="52" y="104" width="14" height="168" rx="7" fill="#fff" opacity=".18"/>
+        <rect x="62" y="160" width="76" height="62" rx="4" fill="#f4efe2"/>
+        <text x="100" y="186" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="15" fill="#2a2a2a">L'HEURE</text>
+        <text x="100" y="204" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="15" fill="#2a2a2a">VERTE</text>
+      </svg>
+    </div>
+    <div>
+      <div class="sub" style="margin:0 0 4px">Kilian Paris · The Liquors</div>
+      <h1>L'Heure Verte</h1>
+      <p class="sub">The “green hour”, when Paris drank absinthe. Herbal and bitter at the start, cool violet leaf in the middle, then dark patchouli and woods.</p>
+      <div class="tags"><span class="tag">Eau de Parfum</span><span class="tag">Unisex</span><span class="tag">Green · Boozy · Woody</span></div>
+      <div class="facts">
+        <div class="fact"><b>Perfumer</b>Mathieu Nardin</div>
+        <div class="fact"><b>Collection</b>The Liquors</div>
+        <div class="fact"><b>Signature</b>Absinthe</div>
+        <div class="fact"><b>Best for</b>Evening, cool weather</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACCORDS -->
+  <section class="card">
+    <h2>Main accords</h2>
+    <p class="sub" style="margin-bottom:0">Our read of how it smells.</p>
+    <div class="accords">
+      <div class="acc">Green<div class="bar"><span style="width:100%;background:#4f7a3a">absinthe · leaf</span></div></div>
+      <div class="acc">Aromatic<div class="bar"><span style="width:86%;background:#6c8f4a">herbal</span></div></div>
+      <div class="acc">Boozy<div class="bar"><span style="width:74%;background:#a8874a">liqueur</span></div></div>
+      <div class="acc">Earthy<div class="bar"><span style="width:66%;background:#6b5a3e">patchouli</span></div></div>
+      <div class="acc">Violet<div class="bar"><span style="width:52%;background:#7b6a9e">violet leaf</span></div></div>
+      <div class="acc">Woody<div class="bar"><span style="width:48%;background:#8a6544">vetiver · sandal</span></div></div>
+    </div>
+  </section>
+
+  <!-- PYRAMID -->
+  <section class="card">
+    <h2 style="text-align:center">Notes pyramid</h2>
+
+    <div class="tier">
+      <h3>Top</h3>
+      <div class="notes">
+        <div class="note"><div class="ic">
+          <!-- absinthe glass -->
+          <svg viewBox="0 0 64 64"><path d="M18 8h28l-4 26a10 10 0 0 1-20 0z" fill="#7fb35a" stroke="#2f5a2a" stroke-width="2"/><path d="M20 20h24" stroke="#cfe6b8" stroke-width="2"/><path d="M32 44v10M22 56h20" stroke="#2f5a2a" stroke-width="3" stroke-linecap="round"/><rect x="12" y="5" width="40" height="5" rx="2" fill="#bbb" transform="rotate(-8 32 7)"/><rect x="28" y="0" width="8" height="8" rx="1.5" fill="#fff" stroke="#999" transform="rotate(-8 32 4)"/></svg>
+        </div>Absinthe</div>
+      </div>
+    </div>
+
+    <div class="tier">
+      <h3>Heart</h3>
+      <div class="notes">
+        <div class="note"><div class="ic">
+          <!-- violet leaf -->
+          <svg viewBox="0 0 64 64"><path d="M32 58C12 46 10 22 32 6c22 16 20 40 0 52z" fill="#4f7a3a"/><path d="M32 58V12M32 26l-9-6M32 36l10-7M32 46l-10-6" stroke="#cfe6b8" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="50" cy="14" r="5" fill="#7b6a9e"/><circle cx="56" cy="20" r="4" fill="#9a88c4"/></svg>
+        </div>Violet leaf</div>
+      </div>
+    </div>
+
+    <div class="tier">
+      <h3>Base</h3>
+      <div class="notes">
+        <div class="note"><div class="ic">
+          <!-- patchouli -->
+          <svg viewBox="0 0 64 64"><path d="M32 60V20" stroke="#4a5b34" stroke-width="3"/><ellipse cx="22" cy="24" rx="12" ry="8" fill="#5f7f3e" transform="rotate(-25 22 24)"/><ellipse cx="42" cy="24" rx="12" ry="8" fill="#6c8f4a" transform="rotate(25 42 24)"/><ellipse cx="20" cy="42" rx="12" ry="8" fill="#4f7a3a" transform="rotate(-20 20 42)"/><ellipse cx="44" cy="42" rx="12" ry="8" fill="#5f7f3e" transform="rotate(20 44 42)"/><ellipse cx="32" cy="12" rx="6" ry="9" fill="#7fb35a"/></svg>
+        </div>Patchouli</div>
+        <div class="note"><div class="ic">
+          <!-- vetiver roots/grass -->
+          <svg viewBox="0 0 64 64"><path d="M32 34C30 22 26 12 20 4M32 34c0-12 2-22 4-30M32 34c3-10 9-18 16-24" stroke="#6c8f4a" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M14 34h36" stroke="#8a6544" stroke-width="3" stroke-linecap="round"/><path d="M32 34v22M32 40l-10 14M32 40l10 14M26 36l-8 10M38 36l8 10" stroke="#a07a52" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+        </div>Vetiver</div>
+        <div class="note"><div class="ic">
+          <!-- sandalwood log -->
+          <svg viewBox="0 0 64 64"><rect x="10" y="22" width="40" height="22" rx="4" fill="#b88a5c"/><path d="M14 28h30M14 34h26M14 40h32" stroke="#8a6544" stroke-width="1.5"/><ellipse cx="50" cy="33" rx="7" ry="11" fill="#d9b48a" stroke="#8a6544" stroke-width="2"/><ellipse cx="50" cy="33" rx="3" ry="5" fill="none" stroke="#8a6544" stroke-width="1.5"/></svg>
+        </div>Sandalwood</div>
+      </div>
+    </div>
+    <div class="pyr-line"></div>
+  </section>
+
+  <!-- WEAR -->
+  <section class="card grid2">
+    <div>
+      <h2>When to wear</h2>
+      <div class="season">
+        <div class="pill">Winter<i style="--v:85%"></i></div>
+        <div class="pill">Spring<i style="--v:70%"></i></div>
+        <div class="pill">Summer<i style="--v:35%"></i></div>
+        <div class="pill">Fall<i style="--v:95%"></i></div>
+      </div>
+      <div class="season">
+        <div class="pill">Day<i style="--v:55%"></i></div>
+        <div class="pill">Night<i style="--v:95%"></i></div>
+      </div>
+    </div>
+    <div>
+      <h2>Wear it if you like…</h2>
+      <p class="sub">Green, herbal scents with a bit of edge: cocktail bars, old Paris, dark woods. Skip it if you want something sweet or fresh-clean.</p>
+    </div>
+  </section>
+
+  <p class="foot">Note list from retailer listings. Illustrations are original artwork. Kilian Paris and L'Heure Verte are trademarks of their owner.</p>
+</div>
+</body>
+</html>
