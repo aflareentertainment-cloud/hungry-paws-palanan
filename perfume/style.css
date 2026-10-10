@@ -140,3 +140,22 @@ h1{font-family:Cinzel,serif;font-weight:600;font-size:clamp(32px,6vw,54px);lette
   .brand span{font-size:16px}
   .msg-top{display:none}
 }
+
+/* Signature X1 Stories loyalty banner */
+.promo{position:relative;overflow:hidden;display:grid;grid-template-columns:1.1fr 1fr;gap:28px;align-items:center;margin:4px 0 28px;padding:32px;border-radius:22px;color:#f7ecd0;
+  background:radial-gradient(circle at 85% 20%,rgba(243,220,149,.25),transparent 55%),linear-gradient(135deg,#1a1510,#2c2116 60%,#1a1510)}
+.promo::after{content:"";position:absolute;inset:8px;border:1px solid rgba(217,178,90,.45);border-radius:16px;pointer-events:none}
+.promo-eyebrow{font:600 11px Inter,sans-serif;letter-spacing:.22em;text-transform:uppercase;color:#d9b25a;margin:0 0 10px}
+.promo h2{font-family:Cinzel,serif;font-size:clamp(24px,3.4vw,36px);line-height:1.2;color:#fff}
+.promo h2 em{font-style:normal;background:var(--gold-grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.promo-offer{font-size:17px;margin:12px 0 18px;color:#e9dcc0}
+.promo-offer b{color:#f3dc95;font-weight:600}
+.promo-cta{position:relative;z-index:1;display:inline-block;font:600 15px Inter,sans-serif;text-decoration:none;color:#1a1510;background:var(--gold-grad);padding:12px 26px;border-radius:999px}
+.stamps{position:relative;z-index:1;list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+.stamps li{aspect-ratio:1;border-radius:50%;border:1.5px dashed rgba(217,178,90,.6);display:grid;place-items:center;font:600 14px Cinzel,serif;color:#d9b25a}
+.stamps li.free{grid-column:span 2;aspect-ratio:auto;border-radius:999px;border:none;background:var(--gold-grad);color:#1a1510;font:700 15px Cinzel,serif;letter-spacing:.08em;display:flex;flex-direction:column;justify-content:center;line-height:1.1;box-shadow:0 0 24px rgba(243,220,149,.45)}
+.stamps li.free span{font:600 10px Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase}
+@media (max-width:760px){
+  .promo{grid-template-columns:1fr;padding:24px 20px}
+  .stamps{gap:8px}
+}
