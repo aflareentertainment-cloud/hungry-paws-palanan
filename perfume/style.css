@@ -150,7 +150,7 @@ h1{font-family:Cinzel,serif;font-weight:600;font-size:clamp(32px,6vw,54px);lette
 .promo h2 em{font-style:normal;background:var(--gold-grad);-webkit-background-clip:text;background-clip:text;color:transparent}
 .promo-offer{font-size:17px;margin:12px 0 18px;color:#e9dcc0}
 .promo-offer b{color:#f3dc95;font-weight:600}
-.promo-cta{position:relative;z-index:1;display:inline-block;font:600 15px Inter,sans-serif;text-decoration:none;color:#1a1510;background:var(--gold-grad);padding:12px 26px;border-radius:999px}
+.promo-cta{position:relative;z-index:1;display:inline-block;border:none;cursor:pointer;font:600 15px Inter,sans-serif;text-decoration:none;color:#1a1510;background:var(--gold-grad);padding:12px 26px;border-radius:999px}
 .stamps{position:relative;z-index:1;list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
 .stamps li{aspect-ratio:1;border-radius:50%;border:1.5px dashed rgba(217,178,90,.6);display:grid;place-items:center;font:600 14px Cinzel,serif;color:#d9b25a}
 .stamps li.free{grid-column:span 2;aspect-ratio:auto;border-radius:999px;border:none;background:var(--gold-grad);color:#1a1510;font:700 15px Cinzel,serif;letter-spacing:.08em;display:flex;flex-direction:column;justify-content:center;line-height:1.1;box-shadow:0 0 24px rgba(243,220,149,.45)}

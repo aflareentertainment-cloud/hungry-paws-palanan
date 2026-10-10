@@ -155,16 +155,19 @@
     if (location.hash !== "#" + id) history.replaceState(null, "", "#" + id);
   }
 
-  // Copy a ready-made order message, then open the page's Messenger chat.
+  // Copy a ready-made message, then open the page's Messenger inbox.
   function order(id) {
     const p = P.find(x => x.id === id);
-    const msg = `Hi! I'd like to order ${p.brand} ${p.name} (${p.type})${p.price ? " – " + peso(p.price) : ""}. Is it available?`;
+    message(`Hi! I'd like to order ${p.brand} ${p.name} (${p.type})${p.price ? " – " + peso(p.price) : ""}. Is it available?`);
+  }
+  function message(msg) {
     const url = `${MESSENGER}?text=${encodeURIComponent(msg)}`;
     const toast = t => { const el = $("#toast"); el.textContent = t; el.classList.add("show"); setTimeout(() => el.classList.remove("show"), 3500); };
     (navigator.clipboard ? navigator.clipboard.writeText(msg) : Promise.reject())
-      .then(() => toast("Order message copied. Paste it in the chat."), () => toast("Opening Messenger…"));
+      .then(() => toast("Message copied. Paste it in the chat."), () => toast("Opening Messenger…"));
     window.open(url, "_blank", "noopener");
   }
+  $(".promo-cta").addEventListener("click", e => message(e.currentTarget.dataset.message));
   $("#detailBody").addEventListener("click", e => {
     const b = e.target.closest("[data-order]"); if (b) order(b.dataset.order);
   });
