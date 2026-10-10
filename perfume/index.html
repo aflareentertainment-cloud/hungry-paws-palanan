@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Perfume Collection</title>
+<meta name="description" content="Luxury, niche and Arabian perfumes with full notes pyramids.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <p class="eyebrow">The Collection</p>
+    <h1>Perfumes</h1>
+    <p class="muted" id="catDesc"></p>
+    <div class="bar">
+      <nav id="tabs" role="tablist" aria-label="Categories"></nav>
+      <input id="search" type="search" placeholder="Search a brand, perfume or note…" aria-label="Search">
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div id="grid" class="grid"></div>
+  <p class="foot">Notes from public brand and retailer listings. Illustrations are original artwork. Brand and product names are trademarks of their owners.</p>
+</main>
+
+<dialog id="detail" aria-labelledby="dTitle">
+  <button id="closeBtn" class="close" aria-label="Close">×</button>
+  <div id="detailBody"></div>
+</dialog>
+
+<script src="perfumes.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
