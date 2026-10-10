@@ -50,8 +50,7 @@
   const hash = s => [...s].reduce((h, c) => (h * 31 + c.charCodeAt(0)) >>> 0, 7);
   // Squeeze long names so they stay inside the 80px label.
   const fit = (t, max) => t.length > max ? ' textLength="72" lengthAdjust="spacingAndGlyphs"' : "";
-  const bottle = p => {
-    if (p.photo) return `<img src="${esc(p.photo)}" alt="${esc(p.brand + " " + p.name)} bottle" loading="lazy">`;
+  const drawn = p => {
     const [color, cap] = p.color ? [p.color, p.cap] : PALETTE[hash(p.id) % PALETTE.length];
     const g = "g" + hash(p.id);
     return `<svg viewBox="0 0 200 300" role="img" aria-label="${esc(p.name)} bottle illustration">
@@ -68,6 +67,11 @@
         <text x="100" y="204" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="13" fill="#222"${fit(p.name, 11)}>${esc(p.name.toUpperCase().slice(0, 22))}</text>
       </svg>`;
   };
+  // Real bottle photo from the sheet (or notes.js); the drawn bottle sits behind it and
+  // shows if the photo is missing or fails to load.
+  const bottle = p => p.photo
+    ? `<span class="bwrap">${drawn(p)}<img class="bphoto" src="${esc(p.photo)}" alt="${esc(p.brand + " " + p.name)} bottle" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"></span>`
+    : drawn(p);
 
   const badges = p => (p.rare ? `<span class="badge rare">Rare</span>` : "") + (p.fast ? `<span class="badge fast">Fast moving</span>` : "");
 
