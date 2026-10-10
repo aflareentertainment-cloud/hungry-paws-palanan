@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Perfume Collection</title>
-<meta name="description" content="Luxury, niche and Arabian perfumes with full notes pyramids.">
+<meta name="description" content="Designer, niche, Middle Eastern and celebrity perfumes with prices and notes pyramids.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
@@ -17,14 +17,21 @@
     <p class="muted" id="catDesc"></p>
     <div class="bar">
       <nav id="tabs" role="tablist" aria-label="Categories"></nav>
+    </div>
+    <div class="filters">
       <input id="search" type="search" placeholder="Search a brand, perfume or note…" aria-label="Search">
+      <select id="gender" aria-label="Gender"><option value="">For everyone</option><option>Men</option><option>Women</option><option>Unisex</option></select>
+      <select id="sort" aria-label="Sort"><option value="brand">Brand A–Z</option><option value="low">Price: low to high</option><option value="high">Price: high to low</option><option value="notes">With notes first</option></select>
+      <label class="toggle"><input id="rare" type="checkbox"> Rare only</label>
     </div>
   </div>
 </header>
 
 <main class="wrap">
+  <p id="count" class="muted count"></p>
   <div id="grid" class="grid"></div>
-  <p class="foot">Notes from public brand and retailer listings. Illustrations are original artwork. Brand and product names are trademarks of their owners.</p>
+  <button id="more" class="more">Show more</button>
+  <p class="foot">Notes from public brand and retailer listings. Prices in Philippine pesos. Illustrations are original artwork. Brand and product names are trademarks of their owners.</p>
 </main>
 
 <dialog id="detail" aria-labelledby="dTitle">
@@ -32,7 +39,8 @@
   <div id="detailBody"></div>
 </dialog>
 
-<script src="perfumes.js"></script>
+<script src="catalog.js"></script>
+<script src="notes.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

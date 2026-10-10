@@ -1,5 +1,16 @@
 (function () {
-  const P = window.PERFUMES, C = window.CATEGORIES;
+  const NOTES = Object.fromEntries(window.NOTES.map(n => [n.id, n]));
+  const P = window.CATALOG.map(p => Object.assign({}, p, NOTES[p.id] || {}));
+  const C = [
+    { id: "all", label: "All", desc: "The full collection" },
+    { id: "designer", label: "Designer", desc: "Luxury fashion houses: Chanel, Dior, YSL, Tom Ford and more" },
+    { id: "niche", label: "Niche", desc: "Independent and artistic houses: Amouage, Creed, Byredo, MFK and more" },
+    { id: "arabian", label: "Middle Eastern", desc: "Arabian houses: oud, amber, spice and rich sweetness" },
+    { id: "celebrity", label: "Celebrity", desc: "Star-made scents" }
+  ];
+  const PAGE = 48;
+  const peso = n => n ? "₱" + n.toLocaleString("en-PH") : "Ask for price";
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
 
   // Each note maps to an icon family; unknown notes fall back to "default".
   const NOTE_FAMILY = {
@@ -33,93 +44,123 @@
   const icon = n => `<svg viewBox="0 0 64 64" aria-hidden="true">${ICONS[familyOf(n)]}</svg>` +
     `<img class="nphoto" src="img/notes/${slug(n)}.jpg" alt="" loading="lazy" onerror="this.remove()">`;
 
-  // Original bottle illustration tinted per perfume; uses a photo when provided.
-  // Bottle photo: set "photo" in perfumes.js, or drop a file at img/bottles/<id>.png.
-  const bottle = p => p.photo
-    ? `<img src="${p.photo}" alt="${p.brand} ${p.name} bottle">`
-    : `<svg viewBox="0 0 200 300" role="img" aria-label="${p.name} bottle illustration">
-        <defs><linearGradient id="g-${p.id}" x1="0" x2="1">
-          <stop offset="0" stop-color="${p.color}" stop-opacity=".95"/><stop offset=".45" stop-color="${p.color}" stop-opacity=".6"/><stop offset="1" stop-color="${p.color}"/>
+  // Original bottle illustration. Colour comes from notes.js, else is picked from the name.
+  const PALETTE = [["#2c4a7a","#1b1b1b"],["#7a2e1f","#c9a85a"],["#4f7a3a","#1a1a1a"],["#c9a25a","#111"],["#e7b8c2","#d9c7a6"],
+    ["#1f1f1f","#c0c0c0"],["#5b3f7a","#c9a85a"],["#cdbb98","#2a2a2a"],["#2b3b5a","#c9a85a"],["#9c2f45","#1a1a1a"],["#3e6b6b","#c0c0c0"]];
+  const hash = s => [...s].reduce((h, c) => (h * 31 + c.charCodeAt(0)) >>> 0, 7);
+  // Squeeze long names so they stay inside the 80px label.
+  const fit = (t, max) => t.length > max ? ' textLength="72" lengthAdjust="spacingAndGlyphs"' : "";
+  const bottle = p => {
+    if (p.photo) return `<img src="${esc(p.photo)}" alt="${esc(p.brand + " " + p.name)} bottle" loading="lazy">`;
+    const [color, cap] = p.color ? [p.color, p.cap] : PALETTE[hash(p.id) % PALETTE.length];
+    const g = "g" + hash(p.id);
+    return `<svg viewBox="0 0 200 300" role="img" aria-label="${esc(p.name)} bottle illustration">
+        <defs><linearGradient id="${g}" x1="0" x2="1">
+          <stop offset="0" stop-color="${color}" stop-opacity=".95"/><stop offset=".45" stop-color="${color}" stop-opacity=".6"/><stop offset="1" stop-color="${color}"/>
         </linearGradient></defs>
         <ellipse cx="100" cy="288" rx="62" ry="7" fill="#000" opacity=".12"/>
-        <rect x="72" y="22" width="56" height="58" rx="6" fill="${p.cap}"/>
+        <rect x="72" y="22" width="56" height="58" rx="6" fill="${cap}"/>
         <rect x="84" y="80" width="32" height="14" fill="#a8874a"/>
-        <rect x="42" y="94" width="116" height="190" rx="14" fill="url(#g-${p.id})"/>
+        <rect x="42" y="94" width="116" height="190" rx="14" fill="url(#${g})"/>
         <rect x="52" y="104" width="12" height="168" rx="6" fill="#fff" opacity=".2"/>
         <rect x="60" y="162" width="80" height="56" rx="4" fill="#f7f3ea"/>
-        <text x="100" y="186" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="11" fill="#555">${p.brand.toUpperCase().slice(0,22)}</text>
-        <text x="100" y="204" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="13" fill="#222">${p.name.toUpperCase().slice(0,18)}</text>
+        <text x="100" y="186" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="11" fill="#555"${fit(p.brand, 14)}>${esc(p.brand.toUpperCase().slice(0, 24))}</text>
+        <text x="100" y="204" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="13" fill="#222"${fit(p.name, 11)}>${esc(p.name.toUpperCase().slice(0, 22))}</text>
       </svg>`;
+  };
+
+  const badges = p => (p.rare ? `<span class="badge rare">Rare</span>` : "") + (p.fast ? `<span class="badge fast">Fast moving</span>` : "");
 
   const $ = s => document.querySelector(s);
-  let active = "all", query = "";
+  const state = { cat: "all", q: "", gender: "", rare: false, sort: "brand", shown: PAGE };
+
+  function filtered() {
+    const q = state.q.trim().toLowerCase();
+    const list = P.filter(p => (state.cat === "all" || p.category === state.cat) &&
+      (!state.gender || p.gender === state.gender) && (!state.rare || p.rare) &&
+      (!q || [p.brand, p.name, p.type, ...(p.notes ? [...p.notes.top, ...p.notes.heart, ...p.notes.base] : [])].join(" ").toLowerCase().includes(q)));
+    const by = {
+      brand: (a, b) => a.brand.localeCompare(b.brand) || a.name.localeCompare(b.name),
+      low: (a, b) => (a.price || 1e9) - (b.price || 1e9),
+      high: (a, b) => (b.price || 0) - (a.price || 0),
+      notes: (a, b) => !!b.notes - !!a.notes
+    };
+    return list.sort(by[state.sort]);
+  }
 
   function renderTabs() {
-    $("#tabs").innerHTML = C.map(c =>
-      `<button role="tab" aria-selected="${c.id === active}" data-cat="${c.id}">${c.label}</button>`).join("");
-    const c = C.find(x => x.id === active);
-    $("#catDesc").textContent = c.desc || "Every perfume in the collection";
+    $("#tabs").innerHTML = C.map(c => {
+      const n = c.id === "all" ? P.length : P.filter(p => p.category === c.id).length;
+      return `<button role="tab" aria-selected="${c.id === state.cat}" data-cat="${c.id}">${c.label} <small>${n}</small></button>`;
+    }).join("");
+    $("#catDesc").textContent = C.find(x => x.id === state.cat).desc;
   }
 
   function renderGrid() {
-    const q = query.trim().toLowerCase();
-    const list = P.filter(p => (active === "all" || p.category === active) &&
-      (!q || [p.brand, p.name, ...p.notes.top, ...p.notes.heart, ...p.notes.base].join(" ").toLowerCase().includes(q)));
-    $("#grid").innerHTML = list.length ? list.map(p => `
+    const list = filtered();
+    $("#count").textContent = `${list.length} perfume${list.length === 1 ? "" : "s"}`;
+    $("#grid").innerHTML = list.length ? list.slice(0, state.shown).map(p => `
       <button class="pcard" data-id="${p.id}">
-        <div class="pimg">${bottle(p)}</div>
+        <div class="pimg">${badges(p)}${bottle(p)}</div>
         <div class="pbody">
-          <span class="pcat">${C.find(c => c.id === p.category).label}</span>
-          <div class="pbrand">${p.brand}</div>
-          <div class="pname">${p.name}</div>
-          <div class="pnotes">${p.notes.top.slice(0,3).map(n => `<span>${icon(n)}</span>`).join("")}</div>
+          <div class="pbrand">${esc(p.brand)}</div>
+          <div class="pname">${esc(p.name)}</div>
+          <div class="pmeta">${esc(p.type)} · ${p.gender}</div>
+          <div class="prow"><span class="price">${peso(p.price)}</span>
+            ${p.notes ? `<span class="pnotes">${p.notes.top.slice(0, 3).map(n => `<span>${icon(n)}</span>`).join("")}</span>` : ""}</div>
         </div>
-      </button>`).join("") : `<p class="empty">No perfumes match “${query}”.</p>`;
+      </button>`).join("") : `<p class="empty">No perfumes match your search.</p>`;
+    $("#more").hidden = list.length <= state.shown;
   }
 
   const tier = (label, notes) => `
     <div class="tier"><h4>${label}</h4>
-      <div class="notes">${notes.map(n => `<div class="note"><div class="ic">${icon(n)}</div>${n}</div>`).join("")}</div>
+      <div class="notes">${notes.map(n => `<div class="note"><div class="ic">${icon(n)}</div>${esc(n)}</div>`).join("")}</div>
     </div>`;
 
   function openDetail(id) {
     const p = P.find(x => x.id === id);
     if (!p) return;
-    const facts = [["Type", p.type], ["For", p.gender], ["Launched", p.year], ["Perfumer", p.perfumer], ["Best for", p.bestFor]]
-      .filter(f => f[1]).map(f => `<div class="fact"><b>${f[0]}</b>${f[1]}</div>`).join("");
+    const facts = [["Concentration", p.type], ["For", p.gender], ["Category", C.find(c => c.id === p.category).label],
+      ["Launched", p.year], ["Perfumer", p.perfumer], ["Best for", p.bestFor]]
+      .filter(f => f[1]).map(f => `<div class="fact"><b>${f[0]}</b>${esc(f[1])}</div>`).join("");
+    const color = p.color || PALETTE[hash(p.id) % PALETTE.length][0];
     $("#detailBody").innerHTML = `
       <div class="dhero">
-        <div class="dimg" style="--tint:${p.color}">${bottle(p)}</div>
+        <div class="dimg" style="--tint:${color}">${bottle(p)}</div>
         <div>
-          <div class="pbrand">${p.brand}</div>
-          <h2 id="dTitle">${p.name}</h2>
-          <p class="muted">${p.blurb}</p>
-          <div class="chips">${p.accords.map((a, i) => `<span style="opacity:${1 - i * 0.12}">${a}</span>`).join("")}</div>
+          <div class="pbrand">${esc(p.brand)}</div>
+          <h2 id="dTitle">${esc(p.name)}</h2>
+          <div class="dprice">${peso(p.price)} ${badges(p)}</div>
+          ${p.blurb ? `<p class="muted">${esc(p.blurb)}</p>` : ""}
+          ${p.accords ? `<div class="chips">${p.accords.map((a, i) => `<span style="opacity:${1 - i * 0.12}">${esc(a)}</span>`).join("")}</div>` : ""}
           <div class="facts">${facts}</div>
         </div>
       </div>
-      <h3 class="ptitle">Notes pyramid</h3>
-      ${tier("Top notes", p.notes.top)}${tier("Heart notes", p.notes.heart)}${tier("Base notes", p.notes.base)}`;
+      ${p.notes
+        ? `<h3 class="ptitle">Notes pyramid</h3>${tier("Top notes", p.notes.top)}${tier("Heart notes", p.notes.heart)}${tier("Base notes", p.notes.base)}`
+        : `<div class="soon"><h3>Notes pyramid coming soon</h3><p class="muted">Message us and we'll tell you how this one smells.</p></div>`}`;
     const d = $("#detail");
     if (!d.open) d.showModal();
     d.scrollTop = 0;
     if (location.hash !== "#" + id) history.replaceState(null, "", "#" + id);
   }
 
-  function closeDetail() {
-    $("#detail").close();
-  }
-
+  const reset = () => { state.shown = PAGE; renderGrid(); };
   $("#tabs").addEventListener("click", e => {
     const b = e.target.closest("button"); if (!b) return;
-    active = b.dataset.cat; renderTabs(); renderGrid();
+    state.cat = b.dataset.cat; renderTabs(); reset();
   });
-  $("#search").addEventListener("input", e => { query = e.target.value; renderGrid(); });
+  $("#search").addEventListener("input", e => { state.q = e.target.value; reset(); });
+  $("#gender").addEventListener("change", e => { state.gender = e.target.value; reset(); });
+  $("#sort").addEventListener("change", e => { state.sort = e.target.value; reset(); });
+  $("#rare").addEventListener("change", e => { state.rare = e.target.checked; reset(); });
+  $("#more").addEventListener("click", () => { state.shown += PAGE; renderGrid(); });
   $("#grid").addEventListener("click", e => {
     const b = e.target.closest(".pcard"); if (b) openDetail(b.dataset.id);
   });
-  $("#closeBtn").addEventListener("click", closeDetail);
-  $("#detail").addEventListener("click", e => { if (e.target.id === "detail") closeDetail(); });
+  $("#closeBtn").addEventListener("click", () => $("#detail").close());
+  $("#detail").addEventListener("click", e => { if (e.target.id === "detail") $("#detail").close(); });
   $("#detail").addEventListener("close", () => history.replaceState(null, "", location.pathname));
 
   renderTabs(); renderGrid();
