@@ -9,6 +9,7 @@
     { id: "celebrity", label: "Celebrity", desc: "Star-made scents" }
   ];
   const PAGE = 48;
+  const MESSENGER = "https://m.me/theparfumerieboutique";
   const peso = n => n ? "₱" + n.toLocaleString("en-PH") : "Ask for price";
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
 
@@ -139,6 +140,10 @@
           ${p.blurb ? `<p class="muted">${esc(p.blurb)}</p>` : ""}
           ${p.accords ? `<div class="chips">${p.accords.map((a, i) => `<span style="opacity:${1 - i * 0.12}">${esc(a)}</span>`).join("")}</div>` : ""}
           <div class="facts">${facts}</div>
+          <button class="order" data-order="${p.id}">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.4 2 2 6.1 2 11.6c0 2.9 1.2 5.4 3.2 7.1V22l3-1.7c1.2.3 2.4.5 3.8.5 5.6 0 10-4.1 10-9.6S17.6 2 12 2zm1 12.9-2.6-2.7-5 2.7 5.5-5.8 2.6 2.7 4.9-2.7-5.4 5.8z"/></svg>
+            Order on Messenger</button>
+          <p class="order-hint">Opens a chat with The Parfumerie Boutique. Your order message is copied, just paste and send.</p>
         </div>
       </div>
       ${p.notes
@@ -149,6 +154,20 @@
     d.scrollTop = 0;
     if (location.hash !== "#" + id) history.replaceState(null, "", "#" + id);
   }
+
+  // Copy a ready-made order message, then open the page's Messenger chat.
+  function order(id) {
+    const p = P.find(x => x.id === id);
+    const msg = `Hi! I'd like to order ${p.brand} ${p.name} (${p.type})${p.price ? " – " + peso(p.price) : ""}. Is it available?`;
+    const url = `${MESSENGER}?text=${encodeURIComponent(msg)}`;
+    const toast = t => { const el = $("#toast"); el.textContent = t; el.classList.add("show"); setTimeout(() => el.classList.remove("show"), 3500); };
+    (navigator.clipboard ? navigator.clipboard.writeText(msg) : Promise.reject())
+      .then(() => toast("Order message copied. Paste it in the chat."), () => toast("Opening Messenger…"));
+    window.open(url, "_blank", "noopener");
+  }
+  $("#detailBody").addEventListener("click", e => {
+    const b = e.target.closest("[data-order]"); if (b) order(b.dataset.order);
+  });
 
   const reset = () => { state.shown = PAGE; renderGrid(); };
   $("#tabs").addEventListener("click", e => {

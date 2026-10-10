@@ -1,16 +1,19 @@
 :root{
-  --bg:#f5f3ee; --card:#fff; --ink:#1d2420; --muted:#6b736e; --line:#e3e0d8;
-  --accent:#1d2420; --accent-ink:#fff; --gold:#a8874a; --soft:#efece4;
+  --bg:#fbf9f4; --card:#fff; --ink:#1d2420; --muted:#6b736e; --line:#e3e0d8;
+  --accent:#1d2420; --accent-ink:#fff; --gold:#a8822e; --soft:#f3efe6;
+  --gold-grad:linear-gradient(135deg,#8a6421,#d9b25a 45%,#f3dc95 60%,#b8892f);
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     --bg:#111412; --card:#1a1e1b; --ink:#ecefe9; --muted:#9aa39d; --line:#2c332f;
-    --accent:#e7d6b0; --accent-ink:#111; --gold:#cfae6e; --soft:#222824;
+    --accent:#e7d6b0; --accent-ink:#111; --gold:#d9b25a; --soft:#222824;
+    --gold-grad:linear-gradient(135deg,#8a6421,#d9b25a 45%,#f3dc95 60%,#b8892f);
   }
 }
 :root[data-theme="dark"]{
   --bg:#111412; --card:#1a1e1b; --ink:#ecefe9; --muted:#9aa39d; --line:#2c332f;
-  --accent:#e7d6b0; --accent-ink:#111; --gold:#cfae6e; --soft:#222824;
+  --accent:#e7d6b0; --accent-ink:#111; --gold:#d9b25a; --soft:#222824;
+    --gold-grad:linear-gradient(135deg,#8a6421,#d9b25a 45%,#f3dc95 60%,#b8892f);
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,sans-serif}
@@ -109,3 +112,31 @@ dialog[open]{animation:pop .25s ease}
 .dimg .bwrap{width:100%;max-width:220px}
 .dimg .bwrap svg{width:100%;height:auto}
 @media (max-width:640px){.pimg .bwrap svg{height:160px}.dimg .bwrap{max-width:160px}}
+
+/* Brand: The Parfumerie Boutique */
+.brandbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:28px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink)}
+.brand img{width:64px;height:64px;border-radius:50%;box-shadow:0 2px 10px rgba(168,130,46,.25)}
+.brand span{font-family:Cinzel,serif;font-weight:600;font-size:20px;line-height:1.1;letter-spacing:.06em;display:flex;flex-direction:column}
+.brand small{font-size:11px;letter-spacing:.3em;color:var(--gold)}
+.brand em{font-style:normal;font-size:12px;letter-spacing:.32em;color:var(--gold)}
+.msg-top{font:600 14px Inter,sans-serif;text-decoration:none;color:#fff;background:var(--gold-grad);padding:10px 20px;border-radius:999px;white-space:nowrap}
+h1{font-family:Cinzel,serif;font-weight:600;font-size:clamp(32px,6vw,54px);letter-spacing:.02em}
+#tabs button[aria-selected="true"]{background:var(--gold-grad);color:#fff;border-color:transparent}
+.order{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:18px;font:600 16px Inter,sans-serif;color:#fff;background:var(--gold-grad);border:none;border-radius:999px;padding:14px 20px;cursor:pointer;box-shadow:0 6px 18px rgba(168,130,46,.3)}
+.order svg{width:20px;height:20px}
+.order:hover{filter:brightness(1.05)}
+.order-hint{font-size:12px;color:var(--muted);text-align:center;margin:8px 0 0}
+.fab{position:fixed;right:16px;bottom:16px;display:flex;align-items:center;gap:8px;text-decoration:none;color:#fff;background:var(--gold-grad);padding:12px 18px;border-radius:999px;font:600 15px Inter,sans-serif;box-shadow:0 8px 24px rgba(0,0,0,.18);z-index:10}
+.fab svg{width:22px;height:22px}
+.toast{position:fixed;left:50%;bottom:84px;transform:translate(-50%,20px);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:999px;font-size:14px;opacity:0;pointer-events:none;transition:.25s;z-index:20;max-width:calc(100% - 32px);text-align:center}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.site-foot{border-top:1px solid var(--line);margin-top:48px;padding:36px 0 90px;text-align:center}
+.site-foot img{border-radius:50%}
+.foot-name{font-family:Cinzel,serif;font-size:20px;font-weight:600;margin:8px 0 0}
+.site-foot a{color:var(--gold);font-weight:600}
+@media (max-width:640px){
+  .brand img{width:48px;height:48px}
+  .brand span{font-size:16px}
+  .msg-top{display:none}
+}

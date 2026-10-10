@@ -3,17 +3,29 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Perfume Collection</title>
-<meta name="description" content="Designer, niche, Middle Eastern and celebrity perfumes with prices and notes pyramids.">
+<title>The Parfumerie Boutique</title>
+<meta name="description" content="The Parfumerie Boutique: designer, niche, Middle Eastern and celebrity perfumes. Browse prices and notes, then order on Messenger.">
+<meta property="og:title" content="The Parfumerie Boutique">
+<meta property="og:description" content="Designer, niche and Middle Eastern perfumes. Tap a scent, see its notes, order on Messenger.">
+<meta property="og:image" content="img/logo.webp">
+<link rel="icon" href="img/favicon.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <header class="top">
   <div class="wrap">
+    <div class="brandbar">
+      <a class="brand" href="./">
+        <img src="img/logo.webp" alt="The Parfumerie Boutique logo" width="64" height="64">
+        <span><small>The</small>Parfumerie <em>Boutique</em></span>
+      </a>
+      <a class="msg-top" href="https://m.me/theparfumerieboutique" target="_blank" rel="noopener">Message us</a>
+    </div>
     <p class="eyebrow">The Collection</p>
-    <h1>Perfumes</h1>
+    <h1>Find your scent</h1>
     <p class="muted" id="catDesc"></p>
     <div class="bar">
       <nav id="tabs" role="tablist" aria-label="Categories"></nav>
@@ -31,8 +43,23 @@
   <p id="count" class="muted count"></p>
   <div id="grid" class="grid"></div>
   <button id="more" class="more">Show more</button>
-  <p class="foot">Notes from public brand and retailer listings. Prices in Philippine pesos. Illustrations are original artwork. Brand and product names are trademarks of their owners.</p>
 </main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <img src="img/logo.webp" alt="" width="72" height="72">
+    <p class="foot-name">The Parfumerie Boutique</p>
+    <p class="muted">Order and ask questions on Messenger.</p>
+    <p><a href="https://m.me/theparfumerieboutique" target="_blank" rel="noopener">Messenger</a> · <a href="https://www.facebook.com/theparfumerieboutique" target="_blank" rel="noopener">Facebook page</a></p>
+    <p class="foot">Prices in Philippine pesos. Notes from public brand and retailer listings. Brand and product names are trademarks of their owners.</p>
+  </div>
+</footer>
+
+<a class="fab" href="https://m.me/theparfumerieboutique" target="_blank" rel="noopener" aria-label="Message The Parfumerie Boutique on Messenger">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.4 2 2 6.1 2 11.6c0 2.9 1.2 5.4 3.2 7.1V22l3-1.7c1.2.3 2.4.5 3.8.5 5.6 0 10-4.1 10-9.6S17.6 2 12 2zm1 12.9-2.6-2.7-5 2.7 5.5-5.8 2.6 2.7 4.9-2.7-5.4 5.8z"/></svg>
+  <span>Order</span>
+</a>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
 
 <dialog id="detail" aria-labelledby="dTitle">
   <button id="closeBtn" class="close" aria-label="Close">×</button>
